@@ -1,7 +1,10 @@
 package com.launcher.samiboxtv
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,10 +19,27 @@ import com.launcher.samiboxtv.ui.theme.SamiBoxTVTheme
 
 class MainActivity : ComponentActivity() {
     private val viewModel: MainViewModel by viewModels()
+    private lateinit var memoryTester: MemoryUsageTester
+    private lateinit var overlayManager: OverlayWindowManager
 
     @OptIn(ExperimentalTvMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        memoryTester = MemoryUsageTester(this)
+        memoryTester.startMonitoring(intervalMillis = 10000)
+
+        overlayManager = OverlayWindowManager(applicationContext)
+
+        // Si no tiene permiso de overlay, lo pide al usuario
+        if (!overlayManager.canDrawOverlays()) {
+            val intent = Intent(
+                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:$packageName")
+            )
+            startActivity(intent)
+        }
+
         setContent {
             SamiBoxTVTheme {
                 Surface(
@@ -35,6 +55,38 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        overlayManager.hide() // limpiar el overlay al destruir la activity
+    }
+
+    @SuppressLint("RestrictedApi")
+    override fun dispatchKeyEvent(event: android.view.KeyEvent): Boolean {
+        if (event.action == android.view.KeyEvent.ACTION_DOWN) {
+            when (event.keyCode) {
+                // Tecla MENU (82) → toggle overlay global (funciona en cualquier app)
+                android.view.KeyEvent.KEYCODE_MENU -> {
+                    if (overlayManager.canDrawOverlays()) {
+                        overlayManager.toggle()
+                    } else {
+                        Toast.makeText(this, "Activa el permiso de superposición en Ajustes", Toast.LENGTH_LONG).show()
+                    }
+                    return true
+                }
+                // Tecla BACK (4) → cerrar overlay si está abierto,
+                // si no: bloquear para que no reinicie el launcher
+                android.view.KeyEvent.KEYCODE_BACK -> {
+                    if (overlayManager.isVisible()) {
+                        overlayManager.hide()
+                        return true
+                    }
+                    return true // bloquea el back en pantalla principal
+                }
+            }
+        }
+        return super.dispatchKeyEvent(event)
     }
 
     private fun launchApp(packageName: String) {

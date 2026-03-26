@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.foundation.basicMarquee
@@ -31,7 +30,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -58,7 +56,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier
 ) {
     val apps by viewModel.apps.collectAsState()
-    
+
     var selectedAppForMenu by remember { mutableStateOf<AppInfo?>(null) }
     var editingApp by remember { mutableStateOf<AppInfo?>(null) }
     var showAddDialog by remember { mutableStateOf(false) }
@@ -148,7 +146,7 @@ fun HomeScreenContent(
                                 val isEditing = editingApp?.packageName == item.packageName
                                 AppCard(
                                     appInfo = item,
-                                    onClick = { 
+                                    onClick = {
                                         if (!isEditing) onAppSelected(item)
                                     },
                                     onLongClick = { onLongClickApp(item) },
@@ -196,7 +194,7 @@ fun HomeScreenContent(
                                             Text(
                                                 text = "Añadir Aplicación",
                                                 color = if (addIsFocused) Color(0xFFFF8C00) else Color.White,
-                                                fontFamily = FontFamily(androidx.compose.ui.text.font.Font(R.font.press_start_2p)),
+                                                fontFamily = FontFamily(Font(R.font.press_start_2p)),
                                                 fontWeight = if (addIsFocused) FontWeight.Bold else FontWeight.Normal,
                                                 textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                                                 maxLines = 1,
@@ -235,10 +233,10 @@ fun LauncherHeader() {
                 color = Color(0xFF00E5FF),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                fontFamily = androidx.compose.ui.text.font.FontFamily(androidx.compose.ui.text.font.Font(com.launcher.samiboxtv.R.font.press_start_2p))
+                fontFamily = FontFamily(Font(R.font.press_start_2p))
             )
         }
-        
+
         ClockView()
     }
 }
@@ -246,7 +244,7 @@ fun LauncherHeader() {
 @Composable
 fun ClockView() {
     var timeText by remember { mutableStateOf(getFormattedTime()) }
-    
+
     LaunchedEffect(Unit) {
         while (true) {
             delay(1000)
@@ -258,7 +256,7 @@ fun ClockView() {
         color = Color(0xFFFF8C00),
         fontSize = 20.sp,
         fontWeight = FontWeight.Medium,
-        fontFamily = androidx.compose.ui.text.font.FontFamily(androidx.compose.ui.text.font.Font(com.launcher.samiboxtv.R.font.press_start_2p))
+        fontFamily = FontFamily(Font(R.font.press_start_2p))
     )
 }
 
@@ -272,7 +270,7 @@ fun getFormattedTime(): String {
 @Composable
 fun HomeScreenPreview() {
     HomeScreenContent(
-        apps = emptyList(), // Como es Preview sin acceso a PackageManager, pasamos empty List
+        apps = emptyList(),
         selectedAppForMenu = null,
         editingApp = null,
         onAppSelected = {},
@@ -285,7 +283,3 @@ fun HomeScreenPreview() {
         onShowAddDialog = {}
     )
 }
-
-
-
-

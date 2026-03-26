@@ -24,3 +24,8 @@ Este documento detalla las ideas y funcionalidades planificadas para las próxim
 ---
 
 > **Nota para el desarrollador:** Cualquier implementación de estas características debe guiarse siempre por la primicia de: **Navegación ágil mediante D-Pad** (flechas del control remoto original) y respeto a la paleta Monospaced y colores oscuros para proteger pantallas grandes (TVs).
+
+
+teclas de control remoto para el modificar 
+key pressed 82 para un monitor de sistema fps y ram temperatura de la caja y uso de memoria ram y uso de almacenamiento interno y externo   y uso de red  en una pantalla en la esquina superior derecha  y que se pueda cerrar con la tecla back sin salir de la aplicacion semitrasparente y que se quede en segundo plano y que se pueda abrir y cerrar con la tecla 82  
+tecla 166 y 167 pendientes de usar  

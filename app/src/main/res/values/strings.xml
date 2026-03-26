@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SamiBox TV</string>
+    <string name="accessibility_service_description">Permite a SamiBox TV mostrar el monitor del sistema sobre cualquier aplicación usando la tecla MENU.</string>
 </resources>
