@@ -59,6 +59,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        memoryTester.stopMonitoring()
         overlayManager.hide() // limpiar el overlay al destruir la activity
     }
 

@@ -53,9 +53,9 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     // 1. Jetpack Compose for TV (Crucial para el control remoto y grillas de TV)
-    implementation("androidx.tv:tv-foundation:1.0.0-beta01")
-    implementation("androidx.tv:tv-material:1.0.1")
+    implementation(libs.androidx.tv.foundation.v100)
+    implementation(libs.androidx.tv.material.v110)
 
     // 2. Coil (Para extraer y dibujar los iconos de las apps súper rápido)
-    implementation("io.coil-kt:coil-compose:2.7.0")
+    implementation(libs.coil.compose)
 }

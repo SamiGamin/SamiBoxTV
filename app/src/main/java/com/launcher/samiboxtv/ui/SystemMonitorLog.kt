@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -26,7 +27,7 @@ import androidx.tv.material3.Card
 import androidx.tv.material3.CardDefaults
 import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Text
-import com.launcher.samiboxtv.R
+import com.launcher.samiboxtv.ui.theme.*
 
 // ─── Model ───────────────────────────────────────────────────────────────────
 
@@ -48,7 +49,7 @@ fun scanAllApps(context: Context): List<ScannedApp> {
         "com.hkw.simplelauncher",       // AllApp - launcher chino de fábrica
         "com.wolf.google.lm",           // Launcher Manager chino
         "com.luancher.apps",            // More Apps - tienda china falsa
-
+ 
         // ── PELIGROSOS: Acceso remoto disfrazado ──
         "com.hcy.remoteAceess",         // "GoogleMail" falso - acceso remoto chino
         "com.hcy.remoteAceessdesk",     // Mouse assisted - mismo autor sospechoso
@@ -73,7 +74,7 @@ fun scanAllApps(context: Context): List<ScannedApp> {
         "com.android.smart.terminal",   // 工厂测试 - test de fábrica chino
         "com.android.inputmethod.pinyin", // Teclado chino Pinyin
 
-        // ── Legacy (lista anterior) ──
+        // ── Legacy ──
         "com.android.browser",
         "com.quick.appstore",
         "com.rockchip.weather",
@@ -97,7 +98,7 @@ fun scanAllApps(context: Context): List<ScannedApp> {
         compareBy({ !it.isBloatware }, { it.isSystemApp }, { it.name.lowercase() })
     )
 
-    // ─── LOGCAT: filtra por tag "SAMIBOX_SCANNER" en Android Studio ──────────
+    // ─── LOGCAT ──────────
     android.util.Log.d("SAMIBOX_SCANNER", "════════════════════════════════════════")
     android.util.Log.d("SAMIBOX_SCANNER", "  TOTAL APPS INSTALADAS: ${sorted.size}")
     android.util.Log.d("SAMIBOX_SCANNER", "════════════════════════════════════════")
@@ -126,12 +127,12 @@ fun SystemMonitorLog(
 ) {
     val context = LocalContext.current
     val scannedApps: List<ScannedApp> by remember { mutableStateOf(scanAllApps(context)) }
-    val pressStartFont = FontFamily(Font(R.font.press_start_2p))
+    val techFont = ShareTechMonoFontFamily
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF030A03))
+            .background(CyberBg)
             .padding(32.dp)
     ) {
         // Header
@@ -143,15 +144,17 @@ fun SystemMonitorLog(
         ) {
             Text(
                 text = "> SYSTEM INFO LOG (PRESS BACK TO EXIT)",
-                color = Color(0xFF00FF00),
-                fontFamily = pressStartFont,
-                fontSize = 14.sp
+                color = CyberCyan,
+                fontFamily = techFont,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Bold
             )
             Text(
                 text = "${scannedApps.size} APPS INSTALLED",
-                color = Color.LightGray,
-                fontFamily = pressStartFont,
-                fontSize = 12.sp
+                color = CyberGrey,
+                fontFamily = techFont,
+                fontSize = 13.sp,
+                fontWeight = FontWeight.Medium
             )
         }
 
@@ -161,7 +164,7 @@ fun SystemMonitorLog(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(items = scannedApps, key = { it.packageName }) { app ->
-                AppLogItem(app = app, pressStartFont = pressStartFont, context = context)
+                AppLogItem(app = app, techFont = techFont, context = context)
             }
         }
     }
@@ -173,19 +176,19 @@ fun SystemMonitorLog(
 @Composable
 fun AppLogItem(
     app: ScannedApp,
-    pressStartFont: FontFamily,
+    techFont: FontFamily,
     context: Context
 ) {
     val textColor = when {
-        app.isBloatware  -> Color(0xFFFF4444)
-        !app.isSystemApp -> Color(0xFF00E5FF)
-        else             -> Color(0xFF00CC00)
+        app.isBloatware  -> CyberMagenta
+        !app.isSystemApp -> CyberCyan
+        else             -> Color(0xFF00FF88) // cyan/green neón futurista
     }
 
     val focusBorderColor = when {
-        app.isBloatware  -> Color(0xFFFF4444)
-        !app.isSystemApp -> Color(0xFF00E5FF)
-        else             -> Color(0xFF00FF00)
+        app.isBloatware  -> CyberMagenta
+        !app.isSystemApp -> CyberCyan
+        else             -> Color(0xFF00FF88)
     }
 
     val prefix = when {
@@ -206,12 +209,12 @@ fun AppLogItem(
         },
         shape = CardDefaults.shape(RoundedCornerShape(6.dp)),
         colors = CardDefaults.colors(
-            containerColor = Color(0xFF0A150A),
-            focusedContainerColor = Color(0xFF1A2E1A)
+            containerColor = CyberCard,
+            focusedContainerColor = Color(0xFF1B2238)
         ),
         border = CardDefaults.border(
             focusedBorder = Border(
-                border = BorderStroke(3.dp, focusBorderColor),
+                border = BorderStroke(1.5.dp, focusBorderColor),
                 shape = RoundedCornerShape(6.dp)
             )
         ),
@@ -234,8 +237,8 @@ fun AppLogItem(
             Text(
                 text = "$prefix ${app.name}  ->  ${app.packageName}",
                 color = textColor,
-                fontFamily = pressStartFont,
-                fontSize = 11.sp,
+                fontFamily = techFont,
+                fontSize = 13.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )

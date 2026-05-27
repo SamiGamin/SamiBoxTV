@@ -33,6 +33,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.tv.material3.MaterialTheme
+import com.launcher.samiboxtv.ui.theme.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.tv.material3.Icon
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -109,7 +114,7 @@ fun HomeScreenContent(
     onShowAddDialog: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(modifier = modifier.fillMaxSize().background(Color(0xFF121212))) {
+    Column(modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         LauncherHeader()
 
         val allItems = apps.toList() + "ADD_BUTTON"
@@ -167,12 +172,12 @@ fun HomeScreenContent(
                                     interactionSource = addInteractionSource,
                                     shape = androidx.tv.material3.CardDefaults.shape(androidx.compose.foundation.shape.RoundedCornerShape(8.dp)),
                                     colors = androidx.tv.material3.CardDefaults.colors(
-                                        containerColor = Color(0xFF0B1426),
-                                        focusedContainerColor = Color(0xFF132238)
+                                        containerColor = CyberCard,
+                                        focusedContainerColor = Color(0xFF1B2238)
                                     ),
                                     border = androidx.tv.material3.CardDefaults.border(
                                         focusedBorder = androidx.tv.material3.Border(
-                                            border = androidx.compose.foundation.BorderStroke(3.dp, Color(0xFFFF8C00)),
+                                            border = androidx.compose.foundation.BorderStroke(2.dp, CyberCyan),
                                             shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
                                         )
                                     )
@@ -185,6 +190,9 @@ fun HomeScreenContent(
                                             Image(
                                                 painter = coil.compose.rememberAsyncImagePainter(model = R.drawable.ic_add_retro),
                                                 contentDescription = "Agregar",
+                                                colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(
+                                                    if (addIsFocused) CyberCyan else CyberGrey
+                                                ),
                                                 modifier = Modifier
                                                     .fillMaxWidth()
                                                     .aspectRatio(1f),
@@ -193,8 +201,7 @@ fun HomeScreenContent(
                                             androidx.compose.foundation.layout.Spacer(modifier = Modifier.height(8.dp))
                                             Text(
                                                 text = "Añadir Aplicación",
-                                                color = if (addIsFocused) Color(0xFFFF8C00) else Color.White,
-                                                fontFamily = FontFamily(Font(R.font.press_start_2p)),
+                                                color = if (addIsFocused) CyberCyan else Color.White,
                                                 fontWeight = if (addIsFocused) FontWeight.Bold else FontWeight.Normal,
                                                 textAlign = androidx.compose.ui.text.style.TextAlign.Center,
                                                 maxLines = 1,
@@ -229,11 +236,11 @@ fun LauncherHeader() {
                 modifier = Modifier.size(48.dp).padding(end = 16.dp)
             )
             Text(
-                text = "SamiBox TV",
-                color = Color(0xFF00E5FF),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                fontFamily = FontFamily(Font(R.font.press_start_2p))
+                text = "SAMIBOX TV",
+                color = CyberCyan,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.ExtraBold,
+                letterSpacing = 1.5.sp
             )
         }
 
@@ -253,10 +260,10 @@ fun ClockView() {
     }
     Text(
         text = timeText,
-        color = Color(0xFFFF8C00),
-        fontSize = 20.sp,
-        fontWeight = FontWeight.Medium,
-        fontFamily = FontFamily(Font(R.font.press_start_2p))
+        color = CyberAmber,
+        fontSize = 26.sp,
+        fontWeight = FontWeight.Bold,
+        fontFamily = ShareTechMonoFontFamily
     )
 }
 

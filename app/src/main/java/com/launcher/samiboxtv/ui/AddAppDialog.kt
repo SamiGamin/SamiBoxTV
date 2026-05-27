@@ -22,6 +22,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.tv.material3.Text
 import com.launcher.samiboxtv.MainViewModel
+import com.launcher.samiboxtv.ui.theme.*
+import androidx.compose.foundation.border
 
 @Composable
 fun AddAppDialog(
@@ -37,21 +39,21 @@ fun AddAppDialog(
         Box(
             modifier = Modifier
                 .fillMaxSize(0.85f)
-                .background(Color(0xFF0B1426), RoundedCornerShape(16.dp))
+                .background(CyberCard, RoundedCornerShape(16.dp))
+                .border(1.5.dp, CyberCyan, RoundedCornerShape(16.dp))
                 .padding(24.dp)
         ) {
             Column {
                 Text(
                     text = "Añadir / Restaurar Aplicaciones Ocultas",
-                    color = Color(0xFF00E5FF),
-                    fontFamily = androidx.compose.ui.text.font.FontFamily(androidx.compose.ui.text.font.Font(com.launcher.samiboxtv.R.font.press_start_2p)),
+                    color = CyberCyan,
                     fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
                 if (hiddenApps.isEmpty()) {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text(text = "No hay aplicaciones ocultas.", color = Color.Gray, fontFamily = androidx.compose.ui.text.font.FontFamily(androidx.compose.ui.text.font.Font(com.launcher.samiboxtv.R.font.press_start_2p)))
+                        Text(text = "No hay aplicaciones ocultas.", color = Color.Gray)
                     }
                 } else {
                     LazyVerticalGrid(
@@ -62,12 +64,12 @@ fun AddAppDialog(
                         modifier = Modifier.fillMaxSize()
                     ) {
                         items(hiddenApps, key = { it.packageName }) { appInfo ->
-                            AppCard(
-                                appInfo = appInfo,
-                                onClick = {
-                                    viewModel.unhideApp(appInfo)
-                                }
-                            )
+                             AppCard(
+                                 appInfo = appInfo,
+                                 onClick = {
+                                     viewModel.unhideApp(appInfo)
+                                 }
+                             )
                         }
                     }
                 }

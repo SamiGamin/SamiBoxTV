@@ -22,6 +22,8 @@ import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Text
 import com.launcher.samiboxtv.data.AppInfo
 import kotlinx.coroutines.delay
+import com.launcher.samiboxtv.ui.theme.*
+import androidx.compose.foundation.border
 
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
@@ -41,7 +43,8 @@ fun AppContextMenu(
     Dialog(onDismissRequest = onDismiss) {
         Box(
             modifier = Modifier
-                .background(Color(0xFF0B1426), RoundedCornerShape(12.dp))
+                .background(CyberCard, RoundedCornerShape(12.dp))
+                .border(1.5.dp, CyberCyan, RoundedCornerShape(12.dp))
                 .padding(24.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -51,8 +54,7 @@ fun AppContextMenu(
             ) {
                 Text(
                     text = "Opciones para: ${appInfo.name}", 
-                    color = Color(0xFF00E5FF),
-                    fontFamily = androidx.compose.ui.text.font.FontFamily(androidx.compose.ui.text.font.Font(com.launcher.samiboxtv.R.font.press_start_2p)),
+                    color = CyberCyan,
                     fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
                 )
                 
@@ -63,12 +65,12 @@ fun AppContextMenu(
                     },
                     enabled = buttonsEnabled,
                     colors = androidx.tv.material3.ButtonDefaults.colors(
-                        containerColor = Color(0xFF132238),
-                        focusedContainerColor = Color(0xFFFF8C00),
-                        focusedContentColor = Color.White
+                        containerColor = Color(0xFF1B2238),
+                        focusedContainerColor = CyberCyan,
+                        focusedContentColor = Color.Black
                     )
                 ) {
-                    Text("Mover de Posición", fontFamily = androidx.compose.ui.text.font.FontFamily(androidx.compose.ui.text.font.Font(com.launcher.samiboxtv.R.font.press_start_2p)))
+                    Text("Mover de Posición", fontWeight = androidx.compose.ui.text.font.FontWeight.Medium)
                 }
                 
                 Button(
@@ -78,12 +80,12 @@ fun AppContextMenu(
                     },
                     enabled = buttonsEnabled,
                     colors = androidx.tv.material3.ButtonDefaults.colors(
-                        containerColor = Color(0xFF132238),
-                        focusedContainerColor = Color(0xFFFF8C00),
-                        focusedContentColor = Color.White
+                        containerColor = Color(0xFF1B2238),
+                        focusedContainerColor = CyberCyan,
+                        focusedContentColor = Color.Black
                     )
                 ) {
-                    Text("Ocultar Aplicación", fontFamily = androidx.compose.ui.text.font.FontFamily(androidx.compose.ui.text.font.Font(com.launcher.samiboxtv.R.font.press_start_2p)))
+                    Text("Ocultar Aplicación", fontWeight = androidx.compose.ui.text.font.FontWeight.Medium)
                 }
             }
         }

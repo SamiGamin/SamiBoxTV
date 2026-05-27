@@ -35,6 +35,7 @@ import androidx.tv.material3.ExperimentalTvMaterial3Api
 import androidx.tv.material3.Text
 import coil.compose.rememberAsyncImagePainter
 import com.launcher.samiboxtv.data.AppInfo
+import com.launcher.samiboxtv.ui.theme.*
 
 @OptIn(ExperimentalTvMaterial3Api::class)
 @Composable
@@ -90,23 +91,23 @@ fun AppCard(
         modifier = keyModifier,
         shape = androidx.tv.material3.CardDefaults.shape(RoundedCornerShape(8.dp)),
         colors = androidx.tv.material3.CardDefaults.colors(
-            containerColor = Color(0xFF0B1426),
-            focusedContainerColor = Color(0xFF132238)
+            containerColor = CyberCard,
+            focusedContainerColor = Color(0xFF1B2238)
         ),
         border = androidx.tv.material3.CardDefaults.border(
             focusedBorder = androidx.tv.material3.Border(
-                border = androidx.compose.foundation.BorderStroke(3.dp, Color(0xFFFF8C00)),
+                border = androidx.compose.foundation.BorderStroke(2.dp, CyberCyan),
                 shape = RoundedCornerShape(8.dp)
             ),
             pressedBorder = androidx.tv.material3.Border(
-                border = androidx.compose.foundation.BorderStroke(3.dp, Color(0xFF00E5FF)),
+                border = androidx.compose.foundation.BorderStroke(2.dp, CyberMagenta),
                 shape = RoundedCornerShape(8.dp)
             )
         )
     ) {
         val editingModifier = if (isEditing) {
-            Modifier.background(Color(0xFF00E5FF).copy(alpha = 0.2f))
-                .border(3.dp, Color(0xFF00E5FF), RoundedCornerShape(8.dp))
+            Modifier.background(CyberMagenta.copy(alpha = 0.2f))
+                .border(2.dp, CyberMagenta, RoundedCornerShape(8.dp))
         } else Modifier
 
         Box(modifier = Modifier.fillMaxSize().then(editingModifier)) {
@@ -125,8 +126,7 @@ fun AppCard(
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = appInfo.name,
-                    color = if (isFocused || isEditing) Color(0xFFFF8C00) else Color.White,
-                    fontFamily = androidx.compose.ui.text.font.FontFamily(androidx.compose.ui.text.font.Font(com.launcher.samiboxtv.R.font.press_start_2p)),
+                    color = if (isFocused || isEditing) CyberCyan else Color.White,
                     fontWeight = if (isFocused || isEditing) androidx.compose.ui.text.font.FontWeight.Bold else androidx.compose.ui.text.font.FontWeight.Normal,
                     textAlign = TextAlign.Center,
                     maxLines = 1,
@@ -136,8 +136,8 @@ fun AppCard(
             }
             
             if (isEditing) {
-                Text("◄ ▲ ▼ ►", color = Color(0xFF00E5FF), fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, modifier = Modifier.align(Alignment.Center))
-                Text("OK", color = Color(0xFF00E5FF), fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 4.dp))
+                Text("◄ ▲ ▼ ►", color = CyberMagenta, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, modifier = Modifier.align(Alignment.Center))
+                Text("OK", color = CyberMagenta, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 4.dp))
             }
         }
     }

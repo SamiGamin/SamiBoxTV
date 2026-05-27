@@ -5,6 +5,8 @@ import android.content.Context
 import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -12,14 +14,22 @@ import kotlinx.coroutines.launch
 class MemoryUsageTester(private val context: Context) {
     private val TAG = "MemoryUsageTester"
     private val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private var job: Job? = null
 
     fun startMonitoring(intervalMillis: Long = 5000) {
-        CoroutineScope(Dispatchers.IO).launch {
+        job?.cancel()
+        job = scope.launch {
             while (isActive) {
                 logMemoryUsage()
                 delay(intervalMillis)
             }
         }
+    }
+
+    fun stopMonitoring() {
+        job?.cancel()
+        job = null
     }
 
     private fun logMemoryUsage() {

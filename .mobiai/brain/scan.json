@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "project_name": "SamiBoxTV",
+  "project_type": "android",
+  "platforms": [
+    "android"
+  ],
+  "build_systems": [
+    "gradle"
+  ],
+  "ui": [
+    "coil",
+    "compose",
+    "tv-foundation",
+    "tv-material"
+  ],
+  "di": [],
+  "network": [],
+  "persistence": [
+    "sharedpreferences"
+  ],
+  "serialization": [],
+  "testing": [],
+  "integrations": [
+    "accessibility-service",
+    "system-overlay"
+  ],
+  "detected_files": {
+    "android_manifest": "app/src/main/AndroidManifest.xml",
+    "settings_gradle": "settings.gradle.kts"
+  },
+  "warnings": [
+    "Missing Clean Architecture module structure (core, domain, presentation, services, di)"
+  ],
+  "created_at": "2026-05-27T20:41:05Z",
+  "updated_at": "2026-05-27T21:21:10Z"
+}

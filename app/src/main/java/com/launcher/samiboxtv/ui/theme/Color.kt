@@ -2,10 +2,11 @@ package com.launcher.samiboxtv.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
-
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+// Cyberpunk Neon Aesthetic Colors
+val CyberBg = Color(0xFF0B0D13)
+val CyberCard = Color(0xFF121520)
+val CyberCyan = Color(0xFF00F0FF)
+val CyberMagenta = Color(0xFFFF0055)
+val CyberAmber = Color(0xFFFFB300)
+val CyberWhite = Color(0xFFF0F2F5)
+val CyberGrey = Color(0xFF6E7280)

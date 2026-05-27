@@ -26,6 +26,7 @@ class OverlayWindowManager(private val context: Context) {
 
     private val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     private var overlayView: ComposeView? = null
+    private var lifecycleOwner: OverlayLifecycleOwner? = null
 
     fun canDrawOverlays(): Boolean =
         Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.canDrawOverlays(context)
@@ -49,12 +50,13 @@ class OverlayWindowManager(private val context: Context) {
             gravity = Gravity.TOP or Gravity.END
         }
 
-        val lifecycleOwner = OverlayLifecycleOwner()
-        lifecycleOwner.start()
+        val owner = OverlayLifecycleOwner()
+        owner.start()
+        lifecycleOwner = owner
 
         val view = ComposeView(context).apply {
-            setViewTreeLifecycleOwner(lifecycleOwner)
-            setViewTreeSavedStateRegistryOwner(lifecycleOwner)
+            setViewTreeLifecycleOwner(owner)
+            setViewTreeSavedStateRegistryOwner(owner)
 
             val coroutineContext = AndroidUiDispatcher.CurrentThread
             val recomposerScope = CoroutineScope(coroutineContext)
@@ -76,6 +78,8 @@ class OverlayWindowManager(private val context: Context) {
             windowManager.removeView(it)
             overlayView = null
         }
+        lifecycleOwner?.stop()
+        lifecycleOwner = null
     }
 
     fun toggle() {
